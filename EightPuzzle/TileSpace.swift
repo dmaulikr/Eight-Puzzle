@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+class TileSpace {
+    
+    init(x: Int, y:Int) {
+        
+    }
+    
+}
