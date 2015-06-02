@@ -18,7 +18,9 @@ class GameScene: SKScene {
 
         let gap = 4
         
-        let _tilesize = (view.bounds.size.width / CGFloat(self.board.width)) - CGFloat(gap)
+        self.size = view.bounds.size
+        
+        let _tilesize = (self.size.width / CGFloat(self.board.width)) - CGFloat(gap)
         let tilesize = CGSize(width: _tilesize, height: _tilesize)
         
         
@@ -26,41 +28,32 @@ class GameScene: SKScene {
         for y in 0..<self.board.height {
             for x in 0..<self.board.width {
                 let square = SKSpriteNode(color: SKColor.blackColor(), size: tilesize)
-                square.position = CGPoint(x: Int(CGFloat(x)*tilesize.width) + (gap/2), y: Int(CGFloat(y)*tilesize.height) + (gap/2))
+                
+                square.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+                
+                println("x: \(x) y: \(y)")
+                println("tilesize: \(tilesize)")
+                println("size: \(view.bounds.size)")
+                
+                square.position = CGPoint(x: Int(tilesize.width/2) + Int(CGFloat(x)*tilesize.width) + gap, y: Int(tilesize.height/2) + Int(CGFloat(y)*tilesize.height) + gap)
                 self.addChild(square)
+                
+                var label = SKLabelNode(fontNamed: "Arial")
+                label.text = "\(y*self.board.width+x)"
+                label.fontSize = 40
+                label.position = square.position
+                self.addChild(label)
+                
             }
         }
         
         
         
-        
-        
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
-        
-        self.addChild(myLabel)
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
         
-        for touch in (touches as! Set<UITouch>) {
-            let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
-        }
     }
    
     override func update(currentTime: CFTimeInterval) {
