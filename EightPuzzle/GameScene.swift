@@ -9,8 +9,32 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    var board:Board! = nil
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        self.board = Board(width: 3, height: 3)
+
+        let gap = 4
+        
+        let _tilesize = (view.bounds.size.width / CGFloat(self.board.width)) - CGFloat(gap)
+        let tilesize = CGSize(width: _tilesize, height: _tilesize)
+        
+        
+        
+        for y in 0..<self.board.height {
+            for x in 0..<self.board.width {
+                let square = SKSpriteNode(color: SKColor.blackColor(), size: tilesize)
+                square.position = CGPoint(x: Int(CGFloat(x)*tilesize.width) + (gap/2), y: Int(CGFloat(y)*tilesize.height) + (gap/2))
+                self.addChild(square)
+            }
+        }
+        
+        
+        
+        
+        
         let myLabel = SKLabelNode(fontNamed:"Chalkduster")
         myLabel.text = "Hello, World!";
         myLabel.fontSize = 65;
