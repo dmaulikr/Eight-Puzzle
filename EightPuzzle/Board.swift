@@ -18,27 +18,42 @@ class Board {
         }
     }
     
-    var _board: [TileSpace]!
-    
-    
-    
-    
-    init() {
-        
-    }
+    var graph: [TileSpace]! = []
+    var tiles: [Tile]! = []
+
     
     init(width: Int, height: Int) {
         self.width = width
         self.height = height
-        self.initBoard()
+        self.initGraph()
+        self.populate()
     }
     
-    func initBoard() {
-        for j in [0...self.height] {
-            for i in [0...self.width] {
-                self._board.append(TileSpace())
+    func initGraph() {
+        // create
+        for y in 0...(self.height-1) {
+            for x in (0...self.width-1) {
+                var ts = TileSpace(x: x, y: y, index: self.width*y+x)
+                if x > 0 {
+                    ts.addConnection(self.graph[ts.index-1])
+                }
+                if y > 0 {
+                    ts.addConnection(self.graph[ts.index-self.width])
+                }
+                self.graph.append(ts)
             }
         }
+    }
+    
+    func populate() {
+        for i in 0...(self.height-1) {
+            self.tiles.append(Tile(value: i, board:self, space: self.graph[i]))
+        }
+    }
+    
+    func currentState() -> [Int] {
+        let state = Array(map(self.tiles) {$0.currentState()} )
+        return state
     }
     
     
