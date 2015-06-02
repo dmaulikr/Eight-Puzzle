@@ -10,8 +10,22 @@ import Foundation
 
 class TileSpace {
     
-    init(x: Int, y:Int) {
+    var x:Int!
+    var y:Int!
+    var index:Int!
+    var connections:[TileSpace]!
+    
+    init(x: Int, y:Int, index:Int) {
+        self.x = x
+        self.y = y
+        self.index = index
         
+        self.connections = []
+    }
+    
+    func addConnection(space: TileSpace!) {
+        self.connections.append(space)
+        space.connections.append(self)
     }
     
 }
