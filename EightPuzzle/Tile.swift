@@ -12,7 +12,7 @@ import SpriteKit
 class Tile : SKNode {
     var value:Int!
     var currentSpace:TileSpace!
-    var destinationSpace:TileSpace! = nil
+    var destinationSpace:TileSpace!
 
     var index:Int {
         get {
@@ -28,6 +28,8 @@ class Tile : SKNode {
     
         self.value = value
         self.currentSpace = space
+        self.currentSpace.occupied = true
+        self.currentSpace.tile = self
         
         self.position = self.currentSpace.position
         
@@ -57,6 +59,26 @@ class Tile : SKNode {
     
     func currentState() -> Int {
         return self.index
+    }
+    
+    func moveTo(space: TileSpace) {
+        space.occupied = true
+        self.destinationSpace = space
+        
+        var action = SKAction.moveTo(self.destinationSpace.position, duration: 0.1)
+        self.runAction(action, completion: self.completedMove)
+    }
+    
+    func completedMove() {
+        // old space
+        self.currentSpace.occupied = false
+        self.currentSpace.tile = nil
+        
+        // new space
+        self.currentSpace = self.destinationSpace
+        self.currentSpace.tile = self
+        self.currentSpace.occupied = true
+        
     }
     
 }

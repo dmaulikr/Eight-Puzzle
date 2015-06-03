@@ -13,6 +13,8 @@ class TileSpace : SKNode {
     var index:Int!
     var size:CGSize!
     var connections:[TileSpace]!
+    var occupied:Bool! = false
+    var tile:Tile! = nil
     
     init(position: CGPoint, size: CGSize, index:Int) {
         super.init()

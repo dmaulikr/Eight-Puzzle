@@ -8,6 +8,10 @@
 
 import SpriteKit
 
+func randRange (lower: Int , upper: Int) -> Int {
+    return lower + Int(arc4random_uniform(UInt32(upper - lower + 1)))
+}
+
 class GameScene: SKScene {
     
     var width: Int! = 3
@@ -19,7 +23,7 @@ class GameScene: SKScene {
         }
     }
     
-    var gap = 4
+    var gap = 1
     
     var graph: [TileSpace]! = []
     var tiles: [Tile]! = []
@@ -77,5 +81,16 @@ class GameScene: SKScene {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        
+        for tilespace:TileSpace in self.graph {
+            if !tilespace.occupied {
+                // get connected spaces to this tile and decide which one to move.
+                var nconns = tilespace.connections.count
+                var conn = tilespace.connections[randRange(0, nconns-1)]
+                conn.tile.moveTo(tilespace)
+                // test
+                //self.tiles[0].moveTo(tilespace)
+            }
+        }
     }
 }
