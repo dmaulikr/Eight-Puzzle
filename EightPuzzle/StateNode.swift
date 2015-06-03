@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+
+class StateNode {
+    var state:[Int]! = []
+    var depth:Int!
+    var pathcost:Int!
+    var parent:StateNode!
+    var children:[StateNode]!
+    
+
+}
