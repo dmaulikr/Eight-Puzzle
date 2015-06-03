@@ -28,6 +28,8 @@ class GameScene: SKScene {
     var graph: [TileSpace]! = []
     var tiles: [Tile]! = []
     
+    var history:[[Int]]! = []
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         self.size = view.bounds.size
@@ -69,7 +71,14 @@ class GameScene: SKScene {
     
     
     func currentState() -> [Int] {
-        let state = Array(map(self.tiles) {$0.currentState()} )
+        var state:[Int]! = []
+        for tilespace in self.graph {
+            if tilespace.tile != nil {
+                state.append(tilespace.tile.index)
+            } else {
+                state.append(-1)
+            }
+        }
         return state
     }
     
@@ -85,6 +94,8 @@ class GameScene: SKScene {
         for tilespace:TileSpace in self.graph {
             if !tilespace.occupied {
                 // get connected spaces to this tile and decide which one to move.
+                self.history.append(self.currentState())
+                
                 var nconns = tilespace.connections.count
                 var conn = tilespace.connections[randRange(0, nconns-1)]
                 conn.tile.moveTo(tilespace)
@@ -92,5 +103,9 @@ class GameScene: SKScene {
                 //self.tiles[0].moveTo(tilespace)
             }
         }
+    }
+    
+    func heuristic(manhattan:Bool) {
+        
     }
 }
