@@ -17,6 +17,7 @@
 		1127AAA41B1ADA1D0029B69C /* EightPuzzleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1127AAA31B1ADA1D0029B69C /* EightPuzzleTests.swift */; };
 		1127AAB11B1ADD820029B69C /* TileSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1127AAB01B1ADD820029B69C /* TileSpace.swift */; };
 		1127AAB31B1ADDA50029B69C /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1127AAB21B1ADDA50029B69C /* Tile.swift */; };
+		11D2119E1B1FBC1800025977 /* StateNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D2119D1B1FBC1800025977 /* StateNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		1127AAA31B1ADA1D0029B69C /* EightPuzzleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EightPuzzleTests.swift; sourceTree = "<group>"; };
 		1127AAB01B1ADD820029B69C /* TileSpace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileSpace.swift; sourceTree = "<group>"; };
 		1127AAB21B1ADDA50029B69C /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
+		11D2119D1B1FBC1800025977 /* StateNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,10 +90,10 @@
 				1127AA891B1ADA1C0029B69C /* AppDelegate.swift */,
 				1127AA8B1B1ADA1C0029B69C /* GameScene.sks */,
 				1127AA8D1B1ADA1C0029B69C /* GameScene.swift */,
+				11D2119D1B1FBC1800025977 /* StateNode.swift */,
 				1127AA8F1B1ADA1C0029B69C /* GameViewController.swift */,
 				1127AAB01B1ADD820029B69C /* TileSpace.swift */,
 				1127AAB21B1ADDA50029B69C /* Tile.swift */,
-				1127AAAF1B1ADC2F0029B69C /* Core */,
 				1127AA911B1ADA1C0029B69C /* Main.storyboard */,
 				1127AA941B1ADA1D0029B69C /* Images.xcassets */,
 				1127AA961B1ADA1D0029B69C /* LaunchScreen.xib */,
@@ -123,13 +125,6 @@
 				1127AAA21B1ADA1D0029B69C /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		1127AAAF1B1ADC2F0029B69C /* Core */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,6 +233,7 @@
 				1127AA901B1ADA1C0029B69C /* GameViewController.swift in Sources */,
 				1127AAB31B1ADDA50029B69C /* Tile.swift in Sources */,
 				1127AA8A1B1ADA1C0029B69C /* AppDelegate.swift in Sources */,
+				11D2119E1B1FBC1800025977 /* StateNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
