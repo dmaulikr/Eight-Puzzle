@@ -8,6 +8,9 @@
 
 import Foundation
 
+struct State {
+    var data:
+}
 
 class StateNode {
     var state:[Int]! = []
@@ -16,5 +19,5 @@ class StateNode {
     var parent:StateNode!
     var children:[StateNode]!
     
-
+    init(startState:)
 }
