@@ -48,6 +48,7 @@
 		1127AAB21B1ADDA50029B69C /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		11D2119D1B1FBC1800025977 /* StateNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateNode.swift; sourceTree = "<group>"; };
 		11D2119F1B207C8D00025977 /* Solver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Solver.swift; sourceTree = "<group>"; };
+		11D211A11B214A6000025977 /* EightStateAlgorithm.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = EightStateAlgorithm.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +97,7 @@
 				1127AAB01B1ADD820029B69C /* TileSpace.swift */,
 				1127AAB21B1ADDA50029B69C /* Tile.swift */,
 				11D2119D1B1FBC1800025977 /* StateNode.swift */,
+				11D211A11B214A6000025977 /* EightStateAlgorithm.playground */,
 				11D2119F1B207C8D00025977 /* Solver.swift */,
 				1127AA911B1ADA1C0029B69C /* Main.storyboard */,
 				1127AA941B1ADA1D0029B69C /* Images.xcassets */,
