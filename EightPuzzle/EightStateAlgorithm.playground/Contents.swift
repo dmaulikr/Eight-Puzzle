@@ -23,7 +23,19 @@ for i in a {
 
 
 
+srand(5)
+for i in 0...100 {
+    var v = Double(rand())/Double(Int32.max)
+    if i == 0 {
+        v = 0
+    }
+    if i == 100 {
+        v = 1
+    }
+    v
+}
 
+Int32.max
 
 struct State : Equatable {
     var data:Array<Int>!
@@ -37,6 +49,12 @@ struct State : Equatable {
         self.data.append(-1)
     }
     
+    func asString() -> String {
+        var strJoin = "".join(map(self.data) { String($0) })
+        let strRepl = strJoin.stringByReplacingOccurrencesOfString("-1", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        return strRepl
+    }
+    
 }
 
 func ==(lhs:State, rhs:State) -> Bool {
@@ -48,7 +66,16 @@ func ==(lhs:State, rhs:State) -> Bool {
     return true
 }
 
+extension Array {
+    mutating func shuffle() {
+        for i in 0..<(count - 1) {
+            let j = Int(Double(rand())/Double(Int32.max)*Double(count - i)) + i
+            swap(&self[i], &self[j])
+        }
+    }
+}
 
+Int(Double(rand())/Double(Int32.max)*6)
 
 
 class StateNode {
@@ -62,6 +89,10 @@ class StateNode {
         self.state = state
         self.depth = depth
         self.pathcost = cost
+    }
+    
+    func expand() {
+        
     }
 }
 
@@ -155,7 +186,15 @@ class Board {
     
     var history:[StateNode]! = []
     
-    init(width:Int = 3, height:Int = 3) {
+    var initialState:State!
+    var goalState:State!
+    
+    var queue:[StateNode]!
+    var root:StateNode!
+    var visited = Dictionary<String,StateNode>()
+    
+    
+    init(width:Int = 3, height:Int = 3, state:State) {
         self.width = width
         self.height = height
         
@@ -175,11 +214,20 @@ class Board {
             }
         }
 
+        self.initialState = state
+        self.goalState = State(width: self.width, height: self.height)
 
-        for i in 0...(self.totalTiles-1) {
-            var t = Tile(value: i, space: self.spaces[i])
+        for (baseIndex,value) in enumerate(self.initialState.data) {
+            value
+            baseIndex
+            var t = Tile(value: value, space: self.spaces[baseIndex])
             self.tiles.append(t)
         }
+        
+        self.queue = [StateNode]()
+        self.root = StateNode(state: self.initialState, depth: 0, cost: 0)
+        self.queue.append(self.root)
+        
 
     }
 
@@ -189,7 +237,7 @@ class Board {
         
         for (i,tilespace) in enumerate(self.spaces) {
             if tilespace.tile != nil {
-                currState.data[i] = tilespace.tile.index
+                currState.data[i] = tilespace.tile.value
             } else {
                 currState.data[i] = -1
             }
@@ -197,13 +245,95 @@ class Board {
         return currState
     }
 
+    func stateAfterMove(tile:Tile!) -> State {
+        var tileIndex = tile.currentSpace.index
+        //var goToIndex:Int = nil
+        
+        var projState:State = self.currentState()
+        
+        for (i,tilespace) in enumerate(self.spaces) {
+            if tilespace.tile == nil {
+                var tmp = projState.data[i]
+                projState.data[i] = projState.data[tileIndex]
+                projState.data[tileIndex] = tmp
+            }
+        }
+        
+        return projState
+    }
+    
+    func cost(state:State) -> Int {
+        // manhattan cost function
+        // get x,y values
+        var thecost = 0
+        for (i,currValue) in enumerate(state.data) {
+            var val = currValue
+            if currValue == -1 {
+                val = state.data.count - 1
+            }
+            
+            var goalX = i/self.width
+            var goalY = i%self.width
+            
+            var currX = val/self.width
+            var currY = val%self.width
+            
+            thecost += (abs(currX-goalX)+abs(currY-goalY))
+            
+        }
+        return thecost
+    }
+    
+    func expandNode(node:StateNode) {
+        node.expand()
+        for child in node.children {
+            
+            if let key = self.visited[child.state.asString()] {
+                println("skipping")
+            } else {
+                self.queue.append(child)
+            }
+        }
+    }
+    
+    func calculatePath() {
+        while (self.currentState() != self.goalState) {
+            if (self.queue.count == 0) {
+                println("could not find path")
+                break
+            }
+            
+            self.step()
+            
+        }
+    }
+    
+    func step() {
+        // pop lowest cost state from list
+        
+    }
+    
+    
+/*
+    func currentMoves() -> [State] {
+    
+        for space in self.spaces {
+            if space.tile == nil {
+                for neighbor in space.connections {
+                    var
+                }
+            }
+        }
 
-
-
+    }
+*/
 
 }
 
 
+
+
+/*
 class Solver {
     var initialState:State!
     var currentState:State!
@@ -225,9 +355,9 @@ class Solver {
     
     var queue:[StateNode]!
     var root:StateNode!
+    var visited = Dictionary<String,StateNode>()
     
     init(board:Board) {
-        board.width
         self.board = board
         self.board
         self.initialState = self.board.currentState()
@@ -238,6 +368,7 @@ class Solver {
         
         self.queue = [StateNode]()
         self.root = StateNode(state: self.initialState, depth: 0, cost: 0)
+        self.queue.append(self.root)
     }
     
     func cost() -> Int {
@@ -263,51 +394,57 @@ class Solver {
     }
     
     func calculatePath() {
-        while self.currentState != self.goalState {
+        while (self.currentState != self.goalState) {
+            if (self.queue.count == 0) {
+                println("could not find path")
+                break
+            }
+            
+            
             
         }
     }
     
+    func step() {
+        
+    }
+    /*
+    func expandNode(node:StateNode) {
+        node.expand()
+        for child in node.children {
+            
+            if self.visited.count(child.state.asString()) > 0 {
+                println("skipping")
+            } else {
+                self.queue.append(child)
+            }
+        }
+    }
+    */
     
 }
+*/
 
+var initialState = State(width: 3, height: 3)
+initialState.data.shuffle()
 
-
-var brd:Board = Board(width: 3, height: 3)
+var brd:Board = Board(width: 3, height: 3, state: initialState )
 brd
 brd.width
 brd.height
 brd.totalTiles
+brd.initialState
+brd.currentState().asString()
 
 
-var currState:State = State(width:3, height:3)
-
-for (i,tilespace) in enumerate(brd.spaces) {
-    i;
-    
-    if tilespace.tile != nil {
-        currState.data[i] = tilespace.tile.index
-    } else {
-        currState.data[i] = -1
-    }
+for space in brd.spaces {
+    space.tile.index
 }
-currState
 
-var s = Solver(board: brd)
-s.currentState.data[0] = 2
-s.currentState.data[1] = 1
-s.currentState.data[2] = 0
-
-s.currentState
-s.cost()
-
-
-
-
-
-
-
-
+for tile in brd.tiles {
+    tile.value
+    tile.currentSpace.index
+}
 
 
 

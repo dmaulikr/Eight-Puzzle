@@ -26,7 +26,7 @@ class Solver {
         self.width = width
         self.height = height
         
-        self.root = StateNode(initialState)
+        //self.root = StateNode(initialState)
         
     }
     
